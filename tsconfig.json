@@ -1,0 +1,15 @@
+{
+  "ts-node": { "files": true },
+  "compilerOptions": {
+    "outDir": "./dist/",
+    "noImplicitAny": true,
+    "module": "es2020",
+    "esModuleInterop": true,
+    "target": "es5",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "allowJs": true,
+    "lib": ["es2020"]
+  },
+  "lib": ["es2020"]
+}
