@@ -7,6 +7,7 @@ class MotionProperty extends Property {
       title: 'Motion',
       type: 'boolean',
       description: 'True when motion is detected',
+      readOnly: true,
     });
   }
 }

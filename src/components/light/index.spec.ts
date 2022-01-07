@@ -1,19 +1,19 @@
 import Light from './';
 
 describe('Light', () => {
-  it('should return a thing with an on/off property', () => {
+  it('should have an onoff property', () => {
     // Arrange & Act
     const light = new Light();
 
     // Assert
-    expect(light.hasProperty('on'));
+    expect(light.hasProperty('onoff')).toBeTruthy();
   });
 
-  it('should default on/off property to "on"', () => {
+  it('should default onoff property to "false"', () => {
     // Arrange & Act
     const light = new Light();
 
     // Assert
-    expect(light.getProperty('on')).toBe(true);
+    expect(light.getProperty('onoff')).toBe(false);
   });
 });

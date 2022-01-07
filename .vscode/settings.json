@@ -25,5 +25,6 @@
     "statusBarItem.remoteBackground": "#45a1ff",
     "statusBarItem.remoteForeground": "#15202b"
   },
-  "peacock.color": "#45a1ff"
+  "peacock.color": "#45a1ff",
+  "cSpell.words": ["webthing"]
 }
