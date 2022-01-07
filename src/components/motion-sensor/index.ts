@@ -1,8 +1,8 @@
 import { Thing } from 'webthing';
-import { MotionProperty } from '../../properties';
+import { MotionProperty, IsActiveProperty } from '../../properties';
 
 class MotionSensor extends Thing {
-  constructor() {
+  constructor(warmupTime = 60_000) {
     super(
       'urn:dev:ops:my-motion-sensor-1234',
       'My Motion Sensor',
@@ -11,6 +11,7 @@ class MotionSensor extends Thing {
     );
 
     this.addProperty(new MotionProperty(this));
+    this.addProperty(new IsActiveProperty(this));
   }
 }
 
