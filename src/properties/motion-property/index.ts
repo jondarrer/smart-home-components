@@ -5,9 +5,8 @@ class MotionProperty extends Property {
     super(thing, 'motion', new Value('no motion'), {
       '@type': 'MotionProperty',
       title: 'Motion',
-      type: 'boolean',
-      description: 'True when motion is detected',
-      readOnly: true,
+      type: 'string',
+      description: '"motion" when motion is detected, "no motion" otherwise',
     });
   }
 }

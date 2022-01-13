@@ -7,7 +7,6 @@ class IsActiveProperty extends Property {
       title: 'Is Active',
       type: 'boolean',
       description: 'True when active',
-      readOnly: true,
     });
   }
 }

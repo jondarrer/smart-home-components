@@ -1,10 +1,23 @@
+import EventEmitter from 'events';
+
 import MotionSensor from './';
 import { sleep } from '../../utils';
 
+const mockGpio = new EventEmitter();
+
+jest.mock('pigpio', () => {
+  return {
+    Gpio: jest.fn().mockImplementation(() => mockGpio),
+  };
+});
+
 describe('MotionSensor', () => {
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
   it('should have a motion property', () => {
     // Arrange & Act
-    const motionSensor = new MotionSensor();
+    const motionSensor = new MotionSensor(0);
 
     // Assert
     expect(motionSensor.hasProperty('motion')).toBeTruthy();
@@ -12,7 +25,7 @@ describe('MotionSensor', () => {
 
   it('should default motion property to "no motion"', () => {
     // Arrange & Act
-    const motionSensor = new MotionSensor();
+    const motionSensor = new MotionSensor(0);
 
     // Assert
     expect(motionSensor.getProperty('motion')).toBe('no motion');
@@ -20,7 +33,7 @@ describe('MotionSensor', () => {
 
   it('should have an isActive property', () => {
     // Arrange & Act
-    const motionSensor = new MotionSensor();
+    const motionSensor = new MotionSensor(0);
 
     // Assert
     expect(motionSensor.hasProperty('isActive')).toBeTruthy();
@@ -28,20 +41,58 @@ describe('MotionSensor', () => {
 
   it('should not be immediately active', () => {
     // Arrange & Act
-    const motionSensor = new MotionSensor();
+    const motionSensor = new MotionSensor(0);
 
     // Assert
     expect(motionSensor.getProperty('isActive')).toBeFalsy();
   });
 
-  it.skip('should be active after the initial start up delay', () => {
+  it('should be active after the initial start up delay', async () => {
     // Arrange
-    const warmupTime = 100;
-    // Act
+    const warmupTime = 10;
     const motionSensor = new MotionSensor(warmupTime);
-    sleep(warmupTime);
+
+    // Act
+    await sleep(warmupTime);
 
     // Assert
     expect(motionSensor.getProperty('isActive')).toBeTruthy();
+  });
+
+  it('should set the motion property to "motion" when motion has been detected after the thing is active', async () => {
+    // Arrange
+    const motionSensor = new MotionSensor(0);
+
+    // Act
+    await sleep(0);
+    mockGpio.emit('alert', 1);
+
+    // Assert
+    expect(motionSensor.getProperty('motion')).toBe('motion');
+  });
+
+  it('should not set the motion property to "motion" when motion has been detected before the thing is active', () => {
+    // Arrange
+    const warmupTime = 10;
+    const motionSensor = new MotionSensor(warmupTime);
+
+    // Act
+    mockGpio.emit('alert', 1);
+
+    // Assert
+    expect(motionSensor.getProperty('motion')).toBe('no motion');
+  });
+
+  it('should set the motion property to "no motion" after motion has been detected and then is not after the thing is active', async () => {
+    // Arrange
+    const motionSensor = new MotionSensor(0);
+
+    // Act
+    await sleep(0);
+    mockGpio.emit('alert', 1);
+    mockGpio.emit('alert', 0);
+
+    // Assert
+    expect(motionSensor.getProperty('motion')).toBe('no motion');
   });
 });
