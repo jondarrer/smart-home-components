@@ -6,7 +6,8 @@
   "scripts": {
     "build": "webpack",
     "lint": "eslint . --ext .ts",
-    "test": "jest"
+    "test": "jest",
+    "test-rig": "ts-node src/test-rig/index.ts"
   },
   "repository": {
     "type": "git",

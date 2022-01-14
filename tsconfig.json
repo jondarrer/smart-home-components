@@ -1,15 +1,16 @@
 {
   "ts-node": { "files": true },
+  "display": "Node 14",
+
   "compilerOptions": {
     "outDir": "./dist/",
-    "noImplicitAny": true,
-    "module": "es2020",
+    "lib": ["es2020"],
+    "module": "commonjs",
+    "target": "es2020",
+
+    "strict": true,
     "esModuleInterop": true,
-    "target": "es6",
-    "moduleResolution": "node",
-    "sourceMap": true,
-    "allowJs": true,
-    "lib": ["es2020"]
-  },
-  "lib": ["es2020"]
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  }
 }

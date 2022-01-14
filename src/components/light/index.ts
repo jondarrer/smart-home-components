@@ -4,9 +4,8 @@ import { generateRandomHexId } from '../../utils';
 
 class Light extends Thing {
   constructor() {
-    const id = generateRandomHexId(4);
     super(
-      `urn:jd:shc:light-${id}`,
+      `light-${generateRandomHexId(4)}`,
       'Light',
       ['OnOffSwitch', 'Light'],
       'A smart light'

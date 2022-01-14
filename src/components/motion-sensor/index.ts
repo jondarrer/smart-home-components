@@ -5,11 +5,11 @@ import { generateRandomHexId } from '../../utils';
 
 class MotionSensor extends Thing {
   motionGpioPin: Gpio;
+  _changedEventHandlers: Array<Function> = [];
 
-  constructor(warmupTime = 60_000, pin = 24) {
-    const id = generateRandomHexId(4);
+  constructor(warmupTime = 60_000, pin = 8) {
     super(
-      `urn:jd:shc:motion-sensor-${id}`,
+      `motion-sensor-${generateRandomHexId(4)}`,
       'Motion Sensor',
       ['MotionSensor'],
       'A smart motion sensor'
@@ -19,7 +19,7 @@ class MotionSensor extends Thing {
     this.addProperty(new IsActiveProperty(this));
 
     // It takes a little time for the sensor to warm up,
-    // typically 1 minute, but can vary (especially for testing).
+    // typically 1 minute, but can vary (and useful for unit testing).
     setTimeout(() => {
       this.setProperty('isActive', true);
     }, warmupTime);
@@ -28,8 +28,15 @@ class MotionSensor extends Thing {
     this.motionGpioPin.on('alert', (level: 0 | 1, _tick: number) => {
       if (this.getProperty('isActive') === true) {
         this.setProperty('motion', level === 0 ? 'no motion' : 'motion');
+        this._changedEventHandlers.forEach((handler) =>
+          handler(this.getProperty('motion'))
+        );
       }
     });
+  }
+
+  onChanged(handler: Function) {
+    this._changedEventHandlers.push(handler);
   }
 }
 
