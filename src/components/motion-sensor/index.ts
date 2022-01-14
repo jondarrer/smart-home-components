@@ -1,14 +1,16 @@
 import { Gpio } from 'pigpio';
 import { Thing } from 'webthing';
 import { MotionProperty, IsActiveProperty } from '../../properties';
+import { generateRandomHexId } from '../../utils';
 
 class MotionSensor extends Thing {
   motionGpioPin: Gpio;
 
-  constructor(warmupTime = 60_000) {
+  constructor(warmupTime = 60_000, pin = 24) {
+    const id = generateRandomHexId(4);
     super(
-      'urn:dev:ops:my-motion-sensor-1234',
-      'My Motion Sensor',
+      `urn:jd:shc:motion-sensor-${id}`,
+      'Motion Sensor',
       ['MotionSensor'],
       'A smart motion sensor'
     );
@@ -22,8 +24,8 @@ class MotionSensor extends Thing {
       this.setProperty('isActive', true);
     }, warmupTime);
 
-    this.motionGpioPin = new Gpio(24, { mode: Gpio.INPUT, alert: true });
-    this.motionGpioPin.on('alert', (level: 0 | 1, tick: number) => {
+    this.motionGpioPin = new Gpio(pin, { mode: Gpio.INPUT, alert: true });
+    this.motionGpioPin.on('alert', (level: 0 | 1, _tick: number) => {
       if (this.getProperty('isActive') === true) {
         this.setProperty('motion', level === 0 ? 'no motion' : 'motion');
       }
