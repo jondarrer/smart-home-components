@@ -1,8 +1,8 @@
 import { Property, Thing, Value } from 'webthing';
 
 class IsActiveProperty extends Property {
-  constructor(thing: Thing) {
-    super(thing, 'isActive', new Value(false), {
+  constructor(thing: Thing, value = new Value(false)) {
+    super(thing, 'isActive', value, {
       '@type': 'IsActiveProperty',
       title: 'Is Active',
       type: 'boolean',

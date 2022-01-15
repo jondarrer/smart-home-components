@@ -1,8 +1,8 @@
 import { Property, Thing, Value } from 'webthing';
 
 class OnOffProperty extends Property {
-  constructor(thing: Thing) {
-    super(thing, 'onoff', new Value(false), {
+  constructor(thing: Thing, value = new Value(false)) {
+    super(thing, 'onoff', value, {
       '@type': 'OnOffProperty',
       title: 'OnOff',
       type: 'boolean',
