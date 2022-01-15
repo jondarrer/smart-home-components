@@ -1,4 +1,4 @@
-import { MotionSensor } from '../components';
+import { MotionSensor, RelaySwitch } from '../components';
 
 const rig = () => {
   console.log('Starting rig');
@@ -6,6 +6,17 @@ const rig = () => {
   motionSensor.onChanged((status: string) =>
     console.log(`${motionSensor.getId()} changed: ${status}`)
   );
+
+  const relaySwitch = new RelaySwitch(23);
+  setInterval(() => {
+    const currentValue = relaySwitch.getProperty('onoff');
+    relaySwitch.switch(!currentValue);
+    console.log(
+      `${motionSensor.getId()} switched ${
+        !currentValue === true ? 'on' : 'off'
+      }`
+    );
+  }, 30_000);
   console.log('Rig has been setup');
 };
 
