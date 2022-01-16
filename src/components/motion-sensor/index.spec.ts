@@ -83,19 +83,6 @@ describe('MotionSensor', () => {
     expect(motionSensor.getProperty('motion')).toBe('no motion');
   });
 
-  it('should set the motion property to "no motion" after motion has been detected before the thing is active', async () => {
-    // Arrange
-    const motionSensor = new MotionSensor(0);
-
-    // Act
-    await sleep(0);
-    mockGpio.emit('alert', 1);
-    mockGpio.emit('alert', 0);
-
-    // Assert
-    expect(motionSensor.getProperty('motion')).toBe('no motion');
-  });
-
   it('should fire the onChanged callback after motion has been detected after the thing is active', async () => {
     // Arrange
     const motionSensor = new MotionSensor(0);
@@ -122,5 +109,39 @@ describe('MotionSensor', () => {
 
     // Assert
     expect(mockHandler).not.toHaveBeenCalled();
+  });
+
+  it('should not fire the onChanged callback while motion has been detected after the thing is active before the debounce time', async () => {
+    // Arrange
+    const debounceTime = 20;
+    const motionSensor = new MotionSensor(0, 14, debounceTime);
+    const mockHandler = jest.fn();
+    motionSensor.onChanged(mockHandler);
+
+    // Act
+    await sleep(0);
+    mockGpio.emit('alert', 1);
+    await sleep(debounceTime - 1);
+    mockGpio.emit('alert', 0);
+
+    // Assert
+    expect(mockHandler).not.toHaveBeenCalledWith('no motion');
+  });
+
+  it('should fire the onChanged callback while motion has been detected after the thing is active after the debounce time', async () => {
+    // Arrange
+    const debounceTime = 20;
+    const motionSensor = new MotionSensor(0, 14, debounceTime);
+    const mockHandler = jest.fn();
+    motionSensor.onChanged(mockHandler);
+
+    // Act
+    await sleep(0);
+    mockGpio.emit('alert', 1);
+    await sleep(debounceTime + 1);
+    mockGpio.emit('alert', 0);
+
+    // Assert
+    expect(mockHandler).toHaveBeenCalledWith('no motion');
   });
 });

@@ -1,7 +1,7 @@
 import { MultipleThings, WebThingServer } from 'webthing';
 import { MotionSensor, RelaySwitch } from '../components';
 
-const motionSensor = new MotionSensor(60_000, 14);
+const motionSensor = new MotionSensor(60_000, 14, 20_000);
 const relaySwitch = new RelaySwitch(23);
 
 motionSensor.onChanged((status: string) =>
