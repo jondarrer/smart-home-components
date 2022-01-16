@@ -7,7 +7,7 @@ class MotionSensor extends Thing {
   motionGpioPin: Gpio;
   _changedEventHandlers: Array<Function> = [];
 
-  constructor(warmupTime = 60_000, pin = 8) {
+  constructor(warmupTime = 60_000, pin = 14) {
     super(
       `motion-sensor-${generateRandomHexId(4)}`,
       'Motion Sensor',
