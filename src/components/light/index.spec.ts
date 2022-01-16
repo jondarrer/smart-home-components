@@ -9,11 +9,11 @@ describe('Light', () => {
     expect(light.hasProperty('onoff')).toBeTruthy();
   });
 
-  it('should default onoff property to "false"', () => {
+  it('should default onoff property to "off"', () => {
     // Arrange & Act
     const light = new Light();
 
     // Assert
-    expect(light.getProperty('onoff')).toBe(false);
+    expect(light.getProperty('onoff')).toBe('off');
   });
 });

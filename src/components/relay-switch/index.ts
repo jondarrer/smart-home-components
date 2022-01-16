@@ -10,7 +10,7 @@ class RelaySwitch extends Thing {
     super(
       `relay-switch-${generateRandomHexId(4)}`,
       'Relay Switch',
-      ['RelaySwitch'],
+      ['OnOffSwitch'],
       'A smart relay switch'
     );
 
@@ -20,16 +20,16 @@ class RelaySwitch extends Thing {
   }
 
   switchOn() {
-    this.switch(true);
+    this.switch('on');
   }
 
   switchOff() {
-    this.switch(false);
+    this.switch('off');
   }
 
-  switch(onoff: boolean) {
+  switch(onoff: 'on' | 'off') {
     this.setProperty('onoff', onoff);
-    this.onoffGpioPin.digitalWrite(onoff === true ? 1 : 0);
+    this.onoffGpioPin.digitalWrite(onoff === 'on' ? 1 : 0);
   }
 }
 

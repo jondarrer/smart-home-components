@@ -10,11 +10,9 @@ const rig = () => {
   const relaySwitch = new RelaySwitch(23);
   setInterval(() => {
     const currentValue = relaySwitch.getProperty('onoff');
-    relaySwitch.switch(!currentValue);
+    relaySwitch.switch(currentValue === 'on' ? 'off' : 'on');
     console.log(
-      `${motionSensor.getId()} switched ${
-        !currentValue === true ? 'on' : 'off'
-      }`
+      `${motionSensor.getId()} switched ${currentValue !== 'on' ? 'off' : 'on'}`
     );
   }, 30_000);
   console.log('Rig has been setup');

@@ -34,12 +34,12 @@ describe('RelaySwitch', () => {
     expect(relaySwitch.hasProperty('onoff')).toBeTruthy();
   });
 
-  it('should default onoff property to "false"', () => {
+  it('should default onoff property to "off"', () => {
     // Arrange & Act
     const relaySwitch = new RelaySwitch();
 
     // Assert
-    expect(relaySwitch.getProperty('onoff')).toBe(false);
+    expect(relaySwitch.getProperty('onoff')).toBe('off');
   });
 
   it('should set the GPIO pin to on when switchOn is called', () => {

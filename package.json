@@ -7,7 +7,8 @@
     "build": "webpack",
     "lint": "eslint . --ext .ts",
     "test": "jest",
-    "test-rig": "ts-node src/test-rig/index.ts"
+    "test-rig": "ts-node src/test-rig/index.ts",
+    "test-server": "ts-node src/test-server/index.ts"
   },
   "repository": {
     "type": "git",
