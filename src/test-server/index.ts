@@ -4,9 +4,12 @@ import { MotionSensor, RelaySwitch } from '../components';
 const motionSensor = new MotionSensor(60_000, 14, 20_000);
 const relaySwitch = new RelaySwitch(23);
 
-motionSensor.onChanged((status: string) =>
-  console.log(`${motionSensor.getId()} changed: ${status}`)
-);
+motionSensor.addSubscriber({
+  send: (status: string) => {
+    console.log(`${motionSensor.getId()} changed: ${status}`);
+    // console.log({ motionSensor });
+  },
+});
 
 const server = new WebThingServer(
   new MultipleThings([motionSensor, relaySwitch], 'Bathroom Mirror'),

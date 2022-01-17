@@ -31,6 +31,12 @@ class RelaySwitch extends Thing {
     this.setProperty('onoff', onoff);
     this.onoffGpioPin.digitalWrite(onoff === 'on' ? 1 : 0);
   }
+
+  static fromDescription({ pin = 23 }): RelaySwitch {
+    const relaySwitch = new RelaySwitch(pin);
+
+    return relaySwitch;
+  }
 }
 
 export default RelaySwitch;

@@ -3,9 +3,10 @@ import { MotionSensor, RelaySwitch } from '../components';
 const rig = () => {
   console.log('Starting rig');
   const motionSensor = new MotionSensor(60_000, 14);
-  motionSensor.onChanged((status: string) =>
-    console.log(`${motionSensor.getId()} changed: ${status}`)
-  );
+  motionSensor.addSubscriber({
+    send: (status: string) =>
+      console.log(`${motionSensor.getId()} changed: ${status}`),
+  });
 
   const relaySwitch = new RelaySwitch(23);
   setInterval(() => {
