@@ -1,3 +1,5 @@
-interface Effect {}
+interface Effect {
+  property: any;
+}
 
 export default Effect;

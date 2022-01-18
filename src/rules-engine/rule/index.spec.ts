@@ -38,7 +38,17 @@ describe('Rule', () => {
     expect(rule).toHaveProperty('name', 'Property/Property Test Rule');
     expect(rule).toHaveProperty('trigger');
     expect(rule.trigger).toBeInstanceOf(PropertyTrigger);
+    expect(rule.trigger?.property).toHaveProperty('type', 'string');
+    expect(rule.trigger?.property).toHaveProperty('thing', 'motion-sensor-1');
+    expect(rule.trigger?.property).toHaveProperty('id', 'motion');
+    expect(rule.trigger).toHaveProperty('type', 'PropertyTrigger');
+    expect(rule.trigger).toHaveProperty('value', 'motion');
     expect(rule).toHaveProperty('effect');
     expect(rule.effect).toBeInstanceOf(PropertyEffect);
+    expect(rule.effect?.property).toHaveProperty('type', 'string');
+    expect(rule.effect?.property).toHaveProperty('thing', 'relay-switch-1');
+    expect(rule.effect?.property).toHaveProperty('id', 'onoff');
+    expect(rule.effect).toHaveProperty('type', 'PropertyEffect');
+    expect(rule.effect).toHaveProperty('value', 'on');
   });
 });
